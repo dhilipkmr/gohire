@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "gatsby"
 
 class LoginCard extends React.Component {
   constructor(props) {
@@ -28,7 +29,9 @@ class LoginCard extends React.Component {
           </div>
         </div>
         <div className="padT20 textcenter">
-          <span className="btn textcenter hand inbl fb ico18 expand transAll">{this.state.signIn ? 'Sign In' : 'Sign Up'}</span>
+          <span>
+            <Link className="btn textcenter hand inbl fb ico18 expand transAll tdNone fq" to="/home/">{this.state.signIn ? 'Sign In' : 'Sign Up'}</Link>
+          </span>
         </div>
       </React.Fragment>
     );
@@ -42,8 +45,8 @@ class LoginCard extends React.Component {
           <div className="dflex">
             <div className="width50 inbl loginCardBg1 height450">
               <div className="mt180 textcenter">
-                <span className="go">go</span>
-                <span className="hire">hire</span>
+                <span className="go ico18 fq">go</span>
+                <span className="hire fq">hire</span>
               </div>
             </div>
             <div className="width50 inbl loginCardBg2 textcenter">

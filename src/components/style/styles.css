@@ -109,3 +109,31 @@ input {
   color: white;
   font-weight: bold;
 }
+.tdNone {
+  text-decoration: none;
+}
+.stickyHeader {
+  background: var(--themeBg);
+  padding: 15px;
+  box-shadow:2px 4px 16px 0px #bdbdbd !important;
+  /* position: fixed; */
+  top: 0;
+  width: 100%;
+}
+
+.contest {
+  min-width: 900px;
+  text-align: center;
+  min-height: 500px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.noActive{
+  margin-top: 200px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.fq {
+  font-family: 'Quicksand';
+}
