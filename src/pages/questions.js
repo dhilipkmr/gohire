@@ -169,7 +169,7 @@ class Questions extends React.Component {
   }
 
   render() {
-    const {contest_id = '', title = ''} = window.history.state;
+    const {contest_id = '', title = ''} =   typeof(window) !== 'undefined' ? window.history.state : {};
     const {showSuccess, resolvedApi} = this.state;
     const name = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
     return (

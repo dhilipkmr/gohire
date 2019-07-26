@@ -18,7 +18,7 @@ class Home extends React.Component {
   getContests = () => {
     const headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;'}, withCredentials: true};
     const URL = 'https://0b2bae39.ngrok.io/contests/get_contests/';
-    axios.post(URL, {}, headers).then((response) => {
+    axios.get(URL).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
           active_contests: response.data.active_contests,
