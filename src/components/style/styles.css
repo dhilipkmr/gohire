@@ -55,8 +55,10 @@ body, body.light {
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.3);
   width: 200px;
 }
-
-input {
+.mb10 {
+  margin-bottom: 10px;
+}
+.inpRound {
   border-radius: 20px;
     outline: none;
     border: 1px solid #f9f9f9;
@@ -75,6 +77,9 @@ input {
 .activeTab {
   border-bottom: 2px solid;
   padding-bottom: 2px;
+}
+.mt30 {
+  margin-top: 30px;
 }
 .ico18 {
   font-size: 18px;
@@ -99,7 +104,7 @@ input {
 }
 .go {
   font-size: 60px;
-  color: #f37638;
+  color: #fff;
   font-weight: bold;
 }
 
@@ -122,11 +127,12 @@ input {
 }
 
 .contest {
-  min-width: 900px;
   text-align: center;
-  min-height: 500px;
   padding: 20px;
   margin-top: 20px;
+  max-width: 1000px;
+  margin: auto;
+
 }
 
 .noActive{
@@ -136,4 +142,60 @@ input {
 }
 .fq {
   font-family: 'Quicksand';
+}
+.fss {
+  font-family: sans-serif;
+}
+
+input::placeholder {
+  color: #b1b1b1;
+}
+
+.mb75 {
+  margin-bottom: 75px;
+}
+
+.contestCard {
+  align-items: center;
+    display: flex;
+    margin: 20px;
+    padding: 15px;
+    justify-content: space-between;
+    border: 2px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0px 2px 6px 0px #dedddd;
+}
+
+.challengeBtn {
+  padding: 5px 15px;
+  background: #267dff;
+  border-radius: 5px;
+  color: white;
+}
+.ico22 {
+  font-size: 22px;
+}
+.hoverShadow:hover {
+  box-shadow: 2px 4px 19px 0px #bdbdbd;
+}
+
+.userIcon{
+  font-size: 32px;
+  padding-top: 10px;
+  padding-right: 10px;
+  color: white;
+}
+
+.forgot {
+  font-family: sans-serif;
+  font-size: 12px;
+  color: #267dff;
+}
+.mcqCard {
+  margin: 20px;
+  text-align: left;
+  padding: 15px;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 6px 0px #dedddd;
 }
