@@ -55,6 +55,9 @@ body, body.light {
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.3);
   width: 200px;
 }
+.mr80 {
+  margin-right: 80px;
+}
 .mb10 {
   margin-bottom: 10px;
 }
