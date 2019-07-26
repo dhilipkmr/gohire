@@ -1,8 +1,9 @@
 import React from "react"
-import { Link } from "gatsby"
+import { Link, navigate } from "gatsby"
 import Wrapper from '../components/Wrapper';
 import HeadingLayout from '../components/HeadingLayout';
 import {IoMdCodeWorking} from "react-icons/io";
+
 class Home extends React.Component {
 
   questionRenderer = () => {

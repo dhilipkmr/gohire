@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "gatsby"
 import axios from 'axios';
+import { navigate } from '@reach/router';
 
 class LoginCard extends React.Component {
   constructor(props) {
@@ -21,26 +22,27 @@ class LoginCard extends React.Component {
   }
 
   authenticate = () => {
-    const {email, password} = this.state;
-    axios.post('http://f495e2b2.ngrok.io/user/register/',
+    const {email, password, signIn} = this.state;
+    const URL = 'http://f495e2b2.ngrok.io/user/' + (!signIn ? 'register/' : 'user_login/');
+    axios.post(URL,
       {
         password, email, username: email
       }).then((response) => {
-      console.log(response);
+      if (response.data && response.data.error) {
+        navigate(
+          "/home/",
+          {
+            state: {
+              isStaff: response.data.is_staff
+             },
+          }
+        );
+      }
     }, (err) => {
       console.log(err);
     });
   }
 
-  // updateState = (event) => {
-  //   const val = event.target.value;
-  //   const name = event.target.name;
-  //   console.log(event);
-  //   this.setState({
-  //     [name]: name
-  //   });
-  //   console.log(this.state);
-  // }
 
   signInComp = () => {
     return (
@@ -56,7 +58,7 @@ class LoginCard extends React.Component {
         <div className="padT20 textcenter">
           <span>
             {/* <Link className="btn textcenter hand inbl fb ico18 expand transAll tdNone fq" to="/home/">{this.state.signIn ? 'Sign In' : 'Sign Up'}</Link> */}
-            <span onClick={this.authenticate}>Sign In</span>
+            <span className="btn textcenter hand inbl fb ico18 expand transAll tdNone fq" onClick={this.authenticate}>{this.state.signIn ? 'Sign In' : 'Sign Up'}</span>
           </span>
           <div className="forgot hand">Forgot Password?</div>
         </div>

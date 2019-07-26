@@ -15,9 +15,8 @@ class Editor extends React.Component {
       this.refs.loader.parentElement.removeChild(this.refs.loader);
       this.editor = monaco.editor.create(this.refs.container, {
         value: [
-          'function x() {',
-          '\tconsole.log("Hello world!");',
-          '}'
+          'def hello_go_hire():',
+          ' print("Hello GoHire!!")'
         ].join('\n'),
         language: 'python'
       });
