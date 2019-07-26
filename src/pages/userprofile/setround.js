@@ -24,7 +24,7 @@ class LoginCard extends React.Component {
     const {email, password} = this.state;
     axios.post('http://f495e2b2.ngrok.io/user/register/',
       {
-        password, email, username: email
+        password, email
       }).then((response) => {
       console.log(response);
     }, (err) => {

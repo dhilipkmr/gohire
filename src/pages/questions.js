@@ -2,6 +2,8 @@ import React from "react"
 import { Link } from "gatsby"
 import Wrapper from '../components/Wrapper';
 import HeadingLayout from '../components/HeadingLayout';
+import {FaLaptopCode} from "react-icons/fa";
+
 const mcq = [ 
   {
     q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
@@ -55,7 +57,7 @@ class Questions extends React.Component {
                     }
                   </> :
                   <Link to="/editor/" className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
-                    <span className="">Solve In Editor</span>
+                    <span className="">Solve In Editor <FaLaptopCode className="ml10"/></span>
                   </Link>
                 }
               </div>

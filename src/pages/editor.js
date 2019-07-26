@@ -8,19 +8,19 @@ class Editor extends React.Component {
     super(props);
     this.monaco = null;
   }
+
   componentDidMount() {
     import("monaco-editor").then(monaco => {  
       this.monaco = monaco;      // HERE!!
-      console.log('reached');
-      this.editor = monaco.editor.create(document.getElementById('container'), {
+      this.refs.loader.parentElement.removeChild(this.refs.loader);
+      this.editor = monaco.editor.create(this.refs.container, {
         value: [
           'function x() {',
           '\tconsole.log("Hello world!");',
           '}'
         ].join('\n'),
-        language: 'javascript'
+        language: 'python'
       });
-      console.log(monaco.editor);
     });
 
   }
@@ -34,7 +34,9 @@ class Editor extends React.Component {
            <div className="contest">
             <div className="fb fq ico30 mt30 mb75">Question</div>
               <div className="ico20">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?</div>
-              <div className="textleft" id="container" style={{ width: 800, height: 600, border: "1px solid #ccc", margin: "20px auto" }}></div>
+              <div className="textleft" ref="container" style={{ width: 800, height: 600, border: "1px solid #ccc", margin: "20px auto" }}>
+                <div className="loading" ref="loader">Loading Editer. Please wait...</div>
+              </div>
               <div className=" fr mr80 fss hand challengeBtn expand transAll hoverShadow tdNone white" onClick={() => console.log(this.editor)}>Submit</div>
            </div>
           </div>

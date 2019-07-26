@@ -58,6 +58,12 @@ body, body.light {
 .mr80 {
   margin-right: 80px;
 }
+.alignCenter {
+  align-items: center;
+}
+.ml10 {
+  margin-left: 10px;
+}
 .mb10 {
   margin-bottom: 10px;
 }
@@ -201,4 +207,11 @@ input::placeholder {
   border: 2px solid #ffffff;
   border-radius: 10px;
   box-shadow: 0px 2px 6px 0px #dedddd;
+}
+
+.loading {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 150px;
 }

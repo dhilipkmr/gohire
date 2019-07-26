@@ -2,7 +2,7 @@ import React from "react"
 import { Link } from "gatsby"
 import Wrapper from '../components/Wrapper';
 import HeadingLayout from '../components/HeadingLayout';
-
+import {IoMdCodeWorking} from "react-icons/io";
 class Home extends React.Component {
 
   questionRenderer = () => {
@@ -15,7 +15,7 @@ class Home extends React.Component {
               <div key={id} className="contestCard">
                 <span className="fq ico18 ">{'Go hack Challenge SDE  ' + id}</span>
                 <Link to={'/questions/' + (`?id=${id}`)} className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
-                  <span className="">Solve Challenge</span>
+                  <span className="dflex alignCenter">Solve Challenge <IoMdCodeWorking className="ml10"/></span>
                 </Link>
               </div>
             );
