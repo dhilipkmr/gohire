@@ -3,51 +3,146 @@ import { Link } from "gatsby"
 import Wrapper from '../components/Wrapper';
 import HeadingLayout from '../components/HeadingLayout';
 import {FaLaptopCode} from "react-icons/fa";
+import Timer from 'react-compound-timer';
+import axios from 'axios';
 
-const mcq = [ 
+const questions = [
   {
-    q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
-    a: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
-    isMCQ: true
+    question_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
+    options: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
+    type: 'mcq',
+    id: '1'
   },
   {
-    q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do 3eiusmod tempor incididunt ut labore et dolore magna aliqua?',
-    a: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
-    isMCQ: true
+    question_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
+    options: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
+    type: 'mcq',
+    id: '2'
   },
   {
-    q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
-    a: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
-    isMCQ: true
+    question_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
+    options: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
+    type: 'mcq',
+    id: '3'
+  },
+  { 
+    question_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
+    options: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
+    type: 'mcq',
+    id: '4'
   },
   {
-    q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
-    a: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
-    isMCQ: true
-  },
-  {
-    q: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
-    isMCQ: false
+    question_text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?',
+    options: ['Lorem ipsum1', 'Lorem ipsum2', 'Lorem ipsum3', 'Lorem ipsum4'],
+    type: 'code',
+    id: '5'
   }
-]
+];
+
 class Questions extends React.Component {
+  state = {
+    resolvedApi: false,
+    choosenAnswer: {
+
+    }
+  }
+
+  componentDidMount() {
+    this.beginChallenge();
+    import("monaco-editor");
+  }
+
+  beginChallenge = () => {
+    const contest_id = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
+    const URL = 'https://0b2bae39.ngrok.io/contests/begin_contest/';
+    axios.post(URL, { contest_id }).then((response) => {
+      if (response.data && response.data.success) {
+        this.setState({
+          questions:  response.data.questions_list || questions,
+          resolvedApi: true
+        });
+      } else if (response.data && response.data.error) {
+        this.setState({
+          active_contests: response.data.active_contests,
+          resolvedApi: true
+        });
+      }
+    }, (err) => {
+      console.log(err);
+      this.setState({
+        resolvedApi: true
+      });
+    });
+  }
+
+  updateState = (e) => {
+    const propName = e.target.dataset.quest_id;
+    const answer = e.target.dataset.answer;
+    console.log( e.target.dataset);
+    this.setState({
+      choosenAnswer: {
+        ...this.state.choosenAnswer,
+        [propName]: answer
+      }
+    });
+  }
+
+  finalSubmit = () => {
+    const answer_list = Object.keys(this.state.choosenAnswer).map((quesId) => {
+      return {
+        quest_id: quesId,
+        answer: this.state.choosenAnswer[quesId]
+      }
+    });
+    console.log(answer_list);
+    const URL = 'https://0b2bae39.ngrok.io/contests/submit_contest/';
+    axios.post(URL, {answer_list}).then((response) => {
+      if (response.data && response.data.success) {
+        this.setState({
+          showSuccess: true
+        });
+      }
+    }, (err) => {
+      console.log(err);
+      this.setState({
+        showSuccess: true
+      });
+    });
+  }
+
   mcQuestionRenderer = () => {
+    const { questions = [], choosenAnswer} = this.state;
     return (
       <React.Fragment>
+        <Timer initialTime={3600000} direction="backward">
+          {() => (
+            <div>
+              <div className="fb fss">Challenge Ends in</div>
+              <div className="timer fq">
+                <Timer.Hours /> hours 
+                <span>&nbsp;</span>
+                <Timer.Minutes /> minutes
+                <span>&nbsp;</span>
+                <Timer.Seconds /> seconds
+              </div>
+            </div>
+          )}
+        </Timer>
         {
-          mcq.map((val, index) => {
-            const isMCQ = val.isMCQ;
+          questions.map((val, index) => {
+            const isMCQ = val.type === 'mcq';
             return (
-              <div key={index} className="mcqCard">
-                <form className="fq ico18 mb10 fb">{(index + 1) + '. ' + val.q}</form>
+              <div key={val.id} className="mcqCard">
+                <form className="fq ico18 mb10 fb">{(index + 1) + '. ' + val.question_text}</form>
                 {isMCQ ?
                   <>
                     {
-                      val.a.map((option, index) => {
-                        const keyVal = val.q + option;
+                      val.options.map((option, indexOption) => {
+                        const keyVal = val.id + '_' + indexOption;
+                        const isChecked = choosenAnswer[val.id] == (indexOption + 1);
                         return (
                           <div key={keyVal}>
-                            <input id={keyVal} type="radio" name="gender" value={option}/>
+                            <input id={keyVal} type="radio" value={option} onChange={this.updateState} checked={isChecked} data-quest_id={val.id} data-answer={indexOption + 1} />
                             <span>&nbsp;</span>
                             <span>&nbsp;</span>
                             <label className="padL10 fq" htmlFor={keyVal}>{option}</label>
@@ -64,19 +159,32 @@ class Questions extends React.Component {
             );
           })
         }
+        <div className="fss hand challengeBtn expand transAll hoverShadow white finalSubmit" onClick={this.finalSubmit}>Submit Challenge</div>
       </React.Fragment>
     );
   }
 
+  showLoader = () => {
+    return <div className="loading" ref="loader">Loading Questions...</div>
+  }
+
   render() {
+    const {contest_id = '', title = ''} = window.history.state;
+    const {showSuccess, resolvedApi} = this.state;
     const name = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
     return (
       <Wrapper>
         <HeadingLayout>
           <div>
            <div className="contest">
-            <div className="fb fq ico30 mt30 mb75">{`Go hack Challenge SDE ${name}`}</div>
-              {this.mcQuestionRenderer()}
+              {showSuccess ?
+                <div className="submitted"> Successfully Submitted Test.</div>
+                :
+                <React.Fragment>
+                  <div className="fb fq ico30 mt30 mb75">{title}</div>
+                  {(resolvedApi) ? this.mcQuestionRenderer() : this.showLoader()}
+                </React.Fragment>
+              }
            </div>
           </div>
         </HeadingLayout>

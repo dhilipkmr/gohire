@@ -215,3 +215,32 @@ input::placeholder {
   text-align: center;
   margin-top: 150px;
 }
+
+.timer {
+  font-size: 22px;
+  color: white;
+  background: #f77416;
+  width: 350px;
+  padding: 10px;
+  border-radius: 10px;
+  margin: auto;
+}
+
+.finalSubmit {
+  padding: 15px;
+  background: #f77417;
+  margin: 20px auto;
+  width: 200px;
+}
+
+.submitted {
+  background: green;
+  color: white;
+  font-size: 25px;
+  font-weight: bold;
+  font-family: QuickSand;
+  padding: 20px;
+  border-radius: 15px;
+  width: 500px;
+  margin: 200px auto;
+}
