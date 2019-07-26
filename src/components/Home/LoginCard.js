@@ -23,7 +23,7 @@ class LoginCard extends React.Component {
 
   authenticate = () => {
     const {email, password, signIn} = this.state;
-    const URL = 'http://f495e2b2.ngrok.io/user/' + (!signIn ? 'register/' : 'user_login/');
+    const URL = 'https://f495e2b2.ngrok.io/user/' + (!signIn ? 'register/' : 'user_login/');
     axios.post(URL,
       {
         password, email, username: email
@@ -34,7 +34,7 @@ class LoginCard extends React.Component {
           {
             state: {
               isStaff: response.data.is_staff
-             },
+            },
           }
         );
       }
