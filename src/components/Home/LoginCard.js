@@ -30,10 +30,11 @@ class LoginCard extends React.Component {
       }).then((response) => {
       if (response.data && !response.data.error) {
         navigate(
-          "/home/",
+          "/home/?uid=" + response.data.user_id,
           {
             state: {
-              isStaff: response.data.is_staff
+              isStaff: response.data.is_staff,
+              user_id: response.data.user_id
             },
           }
         );

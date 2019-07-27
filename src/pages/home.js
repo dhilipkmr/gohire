@@ -17,7 +17,8 @@ class Home extends React.Component {
 
   getContests = () => {
     const headers = {headers: {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;'}, withCredentials: true};
-    const URL = 'https://0b2bae39.ngrok.io/contests/get_contests/';
+    const uid = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
+    const URL = 'http://0b2bae39.ngrok.io/contests/get_contests/?user_id=' + uid;
     axios.get(URL).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
@@ -44,6 +45,8 @@ class Home extends React.Component {
 
   questionRenderer = () => {
     const {active_contests} = this.state;
+    // const user_id = typeof(window) === 'undefined' ? '' : window.history.state.user_id;
+    const user_id = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
     return (
       <React.Fragment>
         {
@@ -53,7 +56,7 @@ class Home extends React.Component {
             return (
               <div key={id} className="contestCard">
                 <span className="fq ico18 ">{title}</span>
-                <Link to={'/questions/?id=' + id} state={{ contest_id: id, title}} className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
+                <Link to={'/questions/?uid=' + user_id + '&id=' + id} state={{ contest_id: id, title, user_id }} className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
                   <span className="dflex alignCenter">Solve Challenge <IoMdCodeWorking className="ml10"/></span>
                 </Link>
               </div>
@@ -66,7 +69,7 @@ class Home extends React.Component {
 
   render() {
     console.log('this', this);
-    const {resolvedApi} = this.state;
+    const {resolvedApi, isStaff} = this.state;
     return (
       <Wrapper>
         <HeadingLayout>
