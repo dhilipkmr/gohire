@@ -40,11 +40,15 @@ const questions = [
 ];
 
 class Questions extends React.Component {
-  state = {
-    resolvedApi: false,
-    choosenAnswer: {
-
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      resolvedApi: false,
+      choosenAnswer: {
+      }
+    };
+    this.user_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[0].split('=')[1] : '';
+    this.contest_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[1].split('=')[1] : '';
   }
 
   componentDidMount() {
@@ -53,10 +57,9 @@ class Questions extends React.Component {
   }
 
   beginChallenge = () => {
-    const user_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[0].split('=')[1] : '';
-    const contest_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[1].split('=')[1] : '';
+   
     const URL = 'https://0b2bae39.ngrok.io/contests/begin_contest/';
-    axios.post(URL, { contest_id, user_id }).then((response) => {
+    axios.post(URL, { contest_id: this.contest_id, user_id: this.user_id }).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
           questions:  response.data.questions_list || questions,
@@ -91,6 +94,8 @@ class Questions extends React.Component {
   finalSubmit = () => {
     const answer_list = Object.keys(this.state.choosenAnswer).map((quesId) => {
       return {
+        user_id: this.user_id,
+        contest_id: this.contest_id,
         quest_id: quesId,
         answer: this.state.choosenAnswer[quesId]
       }
