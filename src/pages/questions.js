@@ -59,7 +59,7 @@ class Questions extends React.Component {
   beginChallenge = () => {
    
     const URL = 'https://0b2bae39.ngrok.io/contests/begin_contest/';
-    axios.post(URL, { contest_id: this.contest_id, user_id: this.user_id }).then((response) => {
+    axios.post(URL, {contest_id: this.contest_id, user_id: this.user_id }).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
           questions:  response.data.questions_list || questions,
@@ -94,24 +94,24 @@ class Questions extends React.Component {
   finalSubmit = () => {
     const answer_list = Object.keys(this.state.choosenAnswer).map((quesId) => {
       return {
-        user_id: this.user_id,
-        contest_id: this.contest_id,
         quest_id: quesId,
         answer: this.state.choosenAnswer[quesId]
       }
     });
-    console.log(answer_list);
     const URL = 'https://0b2bae39.ngrok.io/contests/submit_contest/';
-    axios.post(URL, {answer_list}).then((response) => {
+    axios.post(URL, {
+      user_id: this.user_id,
+      contest_id: this.contest_id,
+      answer_list}).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
-          showSuccess: true
+          showSuccess: response.data.message
         });
       }
     }, (err) => {
       console.log(err);
       this.setState({
-        showSuccess: true
+        showSuccess: ''
       });
     });
   }
@@ -157,7 +157,7 @@ class Questions extends React.Component {
                       })
                     }
                   </> :
-                  <Link to="/editor/" className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
+                  <Link to={'/editor/?uid=' + this.user_id + '&id=' + this.contest_id + '&qid=' + val.id} className="fss hand challengeBtn expand transAll hoverShadow tdNone white">
                     <span className="">Solve In Editor <FaLaptopCode className="ml10"/></span>
                   </Link>
                 }
@@ -184,7 +184,7 @@ class Questions extends React.Component {
           <div>
            <div className="contest">
               {showSuccess ?
-                <div className="submitted"> Successfully Submitted Test.</div>
+                <div className="submitted">{showSuccess}</div>
                 :
                 <React.Fragment>
                   <div className="fb fq ico30 mt30 mb75">{title}</div>

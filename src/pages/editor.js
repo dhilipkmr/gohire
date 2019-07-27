@@ -16,16 +16,17 @@ class Editor extends React.Component {
     this.state = {
       resolvedApi: false
     }
+    this.user_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[0].split('=')[1] : '';
+    this.contest_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[1].split('=')[1] : '';
+    this.question_id = this.props.location.search && this.props.location.search.split('&') ? this.props.location.search.split('&')[2].split('=')[1] : '';
   }
 
   get_question_details = () => {
-    const contest_id = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
-    const question_id = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[2] : '';
-    const URL = 'https://0b2bae39.ngrok.io/contests/get_question_details/';
-    axios.post(URL, { contest_id, question_id }).then((response) => {
+    const URL = 'https://0b2bae39.ngrok.io/contests/get_question_details/?user_id=' + this.user_id + '&contest_id=' + this.contest_id + '&question_id=' + this.question_id;
+    axios.get(URL).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
-          question_details: response.data.question_details || question_details,
+          question_details: response.data.question_details[0] || question_details,
           resolvedApi: true
         });
       } else if (response.data && response.data.error) {
@@ -58,11 +59,11 @@ class Editor extends React.Component {
   }
 
   loadQuestion = () => {
-    const {question_text, description} = this.state.question_details;
+    const {question_text = '', description = ''} = this.state.question_details || {};
     return (
       <div>
-        <div className="ico20 fb">{question_text}</div>
-        <div className="ico20">{description}</div>
+        <div className="ico20 textleft fb">{question_text + ' :'}</div>
+        <div className="ico20 textleft">{description}</div>
       </div>
     )
   }

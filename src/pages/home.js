@@ -44,8 +44,13 @@ class Home extends React.Component {
   }
 
   questionRenderer = () => {
-    const {active_contests} = this.state;
+    const {active_contests = []} = this.state;
     // const user_id = typeof(window) === 'undefined' ? '' : window.history.state.user_id;
+    if (active_contests.length === 0) {
+      return (
+        <div className="loading">No Active Contest available for you!</div>
+      );
+    }
     const user_id = this.props.location.search && this.props.location.search.split('=') ? this.props.location.search.split('=')[1] : '';
     return (
       <React.Fragment>
