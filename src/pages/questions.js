@@ -58,7 +58,7 @@ class Questions extends React.Component {
 
   beginChallenge = () => {
    
-    const URL = 'https://0b2bae39.ngrok.io/contests/begin_contest/';
+    const URL = 'http://360aa7b1.ngrok.io/contests/begin_contest/';
     axios.post(URL, {contest_id: this.contest_id, user_id: this.user_id }).then((response) => {
       if (response.data && response.data.success) {
         this.setState({
@@ -98,7 +98,7 @@ class Questions extends React.Component {
         answer: this.state.choosenAnswer[quesId]
       }
     });
-    const URL = 'https://0b2bae39.ngrok.io/contests/submit_contest/';
+    const URL = 'http://360aa7b1.ngrok.io/contests/submit_contest/';
     axios.post(URL, {
       user_id: this.user_id,
       contest_id: this.contest_id,

@@ -56,7 +56,8 @@ body, body.light {
   width: 200px;
 }
 .mr80 {
-  margin-right: 80px;
+  margin-right: 100px;
+  margin-bottom: 100px;
 }
 .alignCenter {
   align-items: center;
@@ -243,4 +244,45 @@ input::placeholder {
   border-radius: 15px;
   width: 500px;
   margin: 200px auto;
+}
+
+.mr160 {
+  margin-right: 242px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 70%;
+  margin: auto;
+  border: 2px solid #ededed !important;
+}
+
+th, td {
+  text-align: left;
+  padding: 15px;
+  padding-left: 5px !important;
+}
+
+tr:nth-child(even) {background-color: #ddebff;}
+
+.rotate90 {
+  transform: rotate(-90deg);
+}
+
+.iiii {
+  margin-left: 372px;
+  margin-bottom: 20px;
+}
+
+.mb200 {
+  margin-bottom: 200px;
+}
+
+.trace {
+  margin-top: 100px;
+  padding: 20px;
+  border-radius: 5px;
+  background: black;
+  color: white;
+  width: 825px;
 }
